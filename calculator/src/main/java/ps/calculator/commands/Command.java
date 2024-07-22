@@ -3,6 +3,7 @@ package ps.calculator.commands;
 import ps.calculator.CalculatorContext;
 import ps.calculator.commands.operands.Operand;
 import ps.calculator.commands.operations.AddOperation;
+import ps.calculator.commands.operations.ApplyImmediatelyOperation;
 import ps.calculator.commands.operations.Operation;
 import ps.calculator.commands.operations.SubtractOperation;
 
@@ -26,6 +27,8 @@ public class Command {
             integerConstruction(context);
         } else if (context.getOperationMode() <= -2) {
             floatConstruction(context);
+        } else if (context.getOperationMode() >= 1) {
+            stringConstruction(context);
         }
     }
 
@@ -44,6 +47,27 @@ public class Command {
             context.setOperationMode(-2);
         } else {
             context.setOperationMode(0);
+            executionMode(context);
+        }
+    }
+
+    private void stringConstruction(CalculatorContext context) {
+        if (c == '(') {
+            Operand<?> topEntry = context.getDataStack().pop();
+            String topValue = (String) topEntry.getValue();
+            context.getDataStack().push(new Operand<>(topValue + "(", String.class));
+            context.increaseOperationMode();
+        }else if (c == ')') {
+            if (context.getOperationMode() > 1) {
+                Operand<?> topEntry = context.getDataStack().pop();
+                String topValue = (String) topEntry.getValue();
+                context.getDataStack().push(new Operand<>(topValue + ")", String.class));
+            }
+            context.decreaseOperationMode();
+        } else {
+            Operand<?> topEntry = context.getDataStack().pop();
+            String topValue = (String) topEntry.getValue();
+            context.getDataStack().push(new Operand<>(topValue + c, String.class));
         }
     }
 
@@ -57,6 +81,9 @@ public class Command {
                 context.getDataStack().push(new Operand<>(BigDecimal.ZERO, BigDecimal.class));
             }
             context.setOperationMode(-2);
+        } else if (c == '(') {
+            context.getDataStack().push(new Operand<>("", String.class));
+            context.setOperationMode(1);
         } else if (isRegister(c)) {
             Operand<?> registerValue = context.getRegisterSet().getRegisterValue(c);
             if (registerValue != null) {
@@ -98,6 +125,7 @@ public class Command {
             context.setOperationMode(-2);
         } else {
             context.setOperationMode(0);
+            executionMode(context);
         }
     }
 
