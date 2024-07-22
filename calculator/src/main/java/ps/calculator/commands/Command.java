@@ -139,6 +139,10 @@ public class Command {
                 Operation subtractOperation = new SubtractOperation();
                 subtractOperation.execute(context);
                 break;
+            case '@':
+                Operation applyImmediatelyOperation = new ApplyImmediatelyOperation();
+                applyImmediatelyOperation.execute(context);
+                break;
             default:
                 context.setOperationMode(0);
                 break;
