@@ -21,7 +21,7 @@ public class RegisterSet {
             registers.put(c, null);
         }
         // Initialize register 'a' with a welcome message and a number
-        registers.put('a', new Operand<>("(Welcome to the calculator!)", String.class));
+        registers.put('a', new Operand<>("(Welcome to the calculator! Enter a command:)", String.class));
         registers.put('b', new Operand<>(42, Integer.class));
     }
 
