@@ -5,9 +5,9 @@ import ps.calculator.commands.operands.Operand;
 
 import java.math.BigDecimal;
 
-public class SubtractOperation implements Operation {
+public class SubtractOperation extends AbstractCheckedOperation {
     @Override
-    public void execute(CalculatorContext context) {
+    protected void performOperation(CalculatorContext context) {
         Operand<?> b = context.getDataStack().pop();
         Operand<?> a = context.getDataStack().pop();
         Operand<?> result;
@@ -27,7 +27,6 @@ public class SubtractOperation implements Operation {
         } else if (a.getValue() instanceof String && b.getValue() instanceof String) {
             result = new Operand<>("", String.class); // Default case for strings
         } else {
-            // Handle other cases or throw an error
             result = new Operand<>("", String.class); // Default case
         }
 

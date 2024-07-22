@@ -5,9 +5,10 @@ import ps.calculator.commands.operands.Operand;
 
 import java.math.BigDecimal;
 
-public class AddOperation implements Operation {
+public class AddOperation extends AbstractCheckedOperation {
+
     @Override
-    public void execute(CalculatorContext context) {
+    protected void performOperation(CalculatorContext context) {
         Operand<?> b = context.getDataStack().pop();
         Operand<?> a = context.getDataStack().pop();
         Operand<?> result;
@@ -25,11 +26,10 @@ public class AddOperation implements Operation {
             BigDecimal sum = ((BigDecimal) a.getValue()).add(new BigDecimal((Integer) b.getValue()));
             result = new Operand<>(sum, BigDecimal.class);
         } else if (a.getValue() instanceof String && b.getValue() instanceof String) {
-            String concat = (String) a.getValue() + (String) b.getValue();
+            String concat = a.getValue() + (String) b.getValue();
             result = new Operand<>(concat, String.class);
         } else {
-            // Handle other cases or throw an error
-            result = new Operand<>("", String.class); // Default case
+            result = new Operand<>("", String.class); // Push empty string otherwise
         }
 
         context.getDataStack().push(result);
