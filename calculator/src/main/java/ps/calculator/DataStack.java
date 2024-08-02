@@ -33,4 +33,19 @@ public class DataStack {
     public Stack<Operand<?>> getStack() {
         return stack;
     }
+
+    // remove element by index
+    public void remove(int index) {
+        if (index < 0 || index >= stack.size()) {
+            throw new IndexOutOfBoundsException("Invalid index for stack removal");
+        }
+        stack.remove(index);
+    }
+
+    public Operand<?> get(int index) {
+        if (index < 0 || index >= stack.size()) {
+            throw new IndexOutOfBoundsException("Invalid index for stack access");
+        }
+        return stack.get(index);
+    }
 }

@@ -5,12 +5,16 @@ public class CalculatorContext {
     private DataStack dataStack;
     private RegisterSet registerSet;
     private int operationMode;
+    private OutputStream outputStream; // Add outputStream field
+
 
     public CalculatorContext() {
         this.commandStream = new CommandStream();
         this.dataStack = new DataStack();
         this.registerSet = new RegisterSet();
         this.operationMode = 0;
+        this.outputStream = new OutputStream(); // Initialize the output stream
+
     }
 
     public CommandStream getCommandStream() {
@@ -46,5 +50,9 @@ public class CalculatorContext {
         dataStack.clear();
         registerSet.reset();
         operationMode = 0;
+    }
+
+    public OutputStream getOutputStream() {
+        return this.outputStream; // Provide a method to access the output stream
     }
 }

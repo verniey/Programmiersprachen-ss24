@@ -2,10 +2,7 @@ package ps.calculator.commands;
 
 import ps.calculator.CalculatorContext;
 import ps.calculator.commands.operands.Operand;
-import ps.calculator.commands.operations.AddOperation;
-import ps.calculator.commands.operations.ApplyImmediatelyOperation;
-import ps.calculator.commands.operations.Operation;
-import ps.calculator.commands.operations.SubtractOperation;
+import ps.calculator.commands.operations.*;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -139,9 +136,54 @@ public class Command {
                 Operation subtractOperation = new SubtractOperation();
                 subtractOperation.execute(context);
                 break;
+            case '*':
+                new MultiplyOperation().execute(context);
+                break;
+            case '/':
+                new DivideOperation().execute(context);
+                break;
+            case '%':
+                new ModulusOperation().execute(context);
+                break;
             case '@':
                 Operation applyImmediatelyOperation = new ApplyImmediatelyOperation();
                 applyImmediatelyOperation.execute(context);
+                break;
+            case '=':
+                new EqualsOperation().execute(context);
+                break;
+            case '<':
+                new LessThanOperation().execute(context);
+                break;
+            case '>':
+                new GreaterThanOperation().execute(context);
+                break;
+            case '&':
+                new AndOperation().execute(context);
+                break;
+            case '|':
+                new OrOperation().execute(context);
+                break;
+            case '_':
+                new NullCheckOperation().execute(context);
+                break;
+            case '~':
+                new NegationOperation().execute(context);
+                break;
+            case '#':
+                new StackSizeOperation().execute(context);
+                break;
+            case '$':
+                new DeleteOperation().execute(context);
+                break;
+            case '!':
+                new CopyOperation().execute(context);
+                break;
+            case '\'':
+                new ReadInputOperation().execute(context);
+                break;
+            case '"':
+                new WriteOutputOperation().execute(context);
                 break;
             default:
                 context.setOperationMode(0);
@@ -150,8 +192,9 @@ public class Command {
     }
 
     private boolean isOperation(char c) {
-        return "+-*/%&|_~!?$@\\#=<>".indexOf(c) >= 0;
+        return "+-*/%&|_~!?$@\\#=<>".indexOf(c) >= 0 || c == '=' || c == '<' || c == '>';
     }
+
 
     private boolean isRegister(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
