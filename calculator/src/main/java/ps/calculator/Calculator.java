@@ -15,34 +15,49 @@ public class Calculator {
     }
 
     private void initialize() {
+        // Load initial content from register 'a'
         Operand<?> initialContent = context.getRegisterSet().getRegisterValue('a');
-        context.getCommandStream().addCommands(initialContent.getValue().toString());
-        while (context.getCommandStream().hasNext()) {
-            Command command = context.getCommandStream().getNextCommand();
-            command.execute(context);
+        if (initialContent != null && initialContent.getValue() instanceof String) {
+            // Display the welcome message from register 'a'
+            System.out.println((String) initialContent.getValue());
+            // Do not add it to the command stream if it's just a message
+            // context.getCommandStream().addCommands((String) initialContent.getValue());
         }
     }
 
+
     public void execute() {
         while (true) {
-            // Output the entire stack using the output stream
-            for (Operand<?> operand : context.getDataStack().getStack()) {
-                outputStream.write(operand.getValue());
-            }
-            outputStream.print();
+            // Prompt for user input
+            System.out.print("> ");  // Indicate user can enter a command
 
+            // Read the user input
             String input = inputStream.readLine();
             context.setOperationMode(0);
+
+            // Exit condition
             if (input == null || input.equalsIgnoreCase("exit")) {
                 break;
             }
 
+            // Add the input commands to the command stream
             context.getCommandStream().addCommands(input);
 
-            while (context.getCommandStream().hasNext()) {
-                Command command = context.getCommandStream().getNextCommand();
-                command.execute(context);
-            }
+            // Execute commands in the stream
+            executeCommands();
+        }
+    }
+
+
+    // Provide direct access to context components for testing
+    public CalculatorContext getContext() {
+        return context;
+    }
+
+    private void executeCommands() {
+        while (context.getCommandStream().hasNext()) {
+            Command command = context.getCommandStream().getNextCommand();
+            command.execute(context);
         }
     }
 
