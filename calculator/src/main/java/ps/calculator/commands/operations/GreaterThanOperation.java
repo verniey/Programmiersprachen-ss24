@@ -24,4 +24,9 @@ public class GreaterThanOperation extends AbstractCheckedOperation {
 
         context.getDataStack().push(new Operand<>(result ? 1 : 0, Integer.class));
     }
+
+    @Override
+    protected int getRequiredStackSize() {
+        return 2; // This operation requires two elements on the stack
+    }
 }

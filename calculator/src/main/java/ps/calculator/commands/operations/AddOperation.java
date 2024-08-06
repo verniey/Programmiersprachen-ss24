@@ -34,4 +34,9 @@ public class AddOperation extends AbstractCheckedOperation {
 
         context.getDataStack().push(result);
     }
+
+    @Override
+    protected int getRequiredStackSize() {
+        return 2; // This operation requires two elements on the stack
+    }
 }

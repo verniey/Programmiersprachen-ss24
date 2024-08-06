@@ -19,4 +19,9 @@ public class AndOperation extends AbstractCheckedOperation {
             context.getDataStack().push(new Operand<>("", String.class));
         }
     }
+
+    @Override
+    protected int getRequiredStackSize() {
+        return 2; // This operation requires two elements on the stack
+    }
 }

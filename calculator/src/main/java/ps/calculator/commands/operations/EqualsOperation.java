@@ -25,4 +25,8 @@ public class EqualsOperation extends AbstractCheckedOperation {
             throw new IllegalArgumentException("Cannot compare different or unsupported types");
         }
     }
+    @Override
+    protected int getRequiredStackSize() {
+        return 2; // This operation requires two elements on the stack
+    }
 }
