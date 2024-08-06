@@ -192,11 +192,19 @@ public class Command {
     }
 
     private boolean isOperation(char c) {
-        return "+-*/%&|_~!?$@\\#=<>".indexOf(c) >= 0 || c == '=' || c == '<' || c == '>';
+        return "+-*/%@=<>|&_~#'\"$!".indexOf(c) >= 0;
     }
 
 
     private boolean isRegister(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
     }
+
+    @Override
+    public String toString() {
+        return "Command: " + c;
+    }
+
+
+
 }
