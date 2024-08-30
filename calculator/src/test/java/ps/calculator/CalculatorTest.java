@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ps.calculator.commands.Command;
-import ps.calculator.commands.operands.Operand;
 
 import java.math.BigDecimal;
 

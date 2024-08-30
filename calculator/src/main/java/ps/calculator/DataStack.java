@@ -48,4 +48,26 @@ public class DataStack {
         }
         return stack.get(index);
     }
+
+    // Add the isEmpty method
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("DataStack: [");
+
+        for (int i = 0; i < this.size(); i++) {
+            sb.append(this.get(i).getValue());
+            if (i < this.size() - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
 }

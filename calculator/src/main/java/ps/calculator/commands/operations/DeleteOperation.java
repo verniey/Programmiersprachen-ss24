@@ -1,24 +1,30 @@
 package ps.calculator.commands.operations;
 
+
+
+
 import ps.calculator.CalculatorContext;
 import ps.calculator.commands.operands.Operand;
+import ps.calculator.commands.operations.AbstractCheckedOperation;
 
-public class DeleteOperation implements Operation {
+public class DeleteOperation extends AbstractCheckedOperation {
+
     @Override
-    public void execute(CalculatorContext context) {
-        // Pop the top entry, which should be an integer n
-        Operand<?> topOperand = context.getDataStack().pop();
+    protected int getRequiredStackSize() {
+        return 1; // Requires at least one element on the stack
+    }
 
-        // Check if the top entry is an integer
-        if (topOperand.getValue() instanceof Integer) {
-            int n = (Integer) topOperand.getValue();
-            int stackSize = context.getDataStack().size();
-
-            // Check if n is within the valid range
-            if (n > 0 && n <= stackSize) {
-                // Remove the nth entry from the stack (1-based index)
-                context.getDataStack().remove(stackSize - n);
+    @Override
+    protected void performOperation(CalculatorContext context) {
+        Operand<?> top = context.getDataStack().pop();
+        if (top.getValue() instanceof Integer) {
+            int index = (Integer) top.getValue();
+            if (index >= 1 && index <= context.getDataStack().size()) {
+                int position = context.getDataStack().size() - index;
+                context.getDataStack().remove(position);
             }
+        } else {
+            // No valid integer at top, no action required
         }
     }
 }

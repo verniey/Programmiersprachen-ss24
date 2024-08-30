@@ -16,4 +16,8 @@ public class Operand<T> {
     public T getValue() {
         return type.cast(value);
     }
+
+    public Class<T> getType() {
+        return type;
+    }
 }

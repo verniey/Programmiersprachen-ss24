@@ -30,6 +30,7 @@ public class CommandStream {
         }
     }
 
+
     public boolean hasNext() {
         return !commands.isEmpty();
     }
@@ -37,4 +38,6 @@ public class CommandStream {
     public void reset() {
         commands.clear();
     }
+
+
 }

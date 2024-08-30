@@ -2,12 +2,14 @@ package ps.calculator.commands.operations;
 
 import ps.calculator.CalculatorContext;
 import ps.calculator.commands.operands.Operand;
+
 import java.math.BigDecimal;
 
 /**
- * Operation to negate the top value of the stack.
+ * Negation operation: Negates the top entry of the stack if it is a number,
+ * or replaces it with an empty string if it's not.
  */
-public class NegateOperation extends AbstractCheckedOperation {
+public class NegationOperation extends AbstractCheckedOperation {
 
     @Override
     protected int getRequiredStackSize() {
@@ -16,22 +18,20 @@ public class NegateOperation extends AbstractCheckedOperation {
 
     @Override
     protected void performOperation(CalculatorContext context) {
-        Operand<?> operand = context.getDataStack().pop();
+        Operand<?> top = context.getDataStack().pop();
+        Object value = top.getValue();
 
-        if (operand.getValue() instanceof Integer) {
-            int value = (Integer) operand.getValue();
-            context.getDataStack().push(new Operand<>(-value, Integer.class));
-            System.out.println("Negated Integer: " + -value);
-        } else if (operand.getValue() instanceof BigDecimal) {
-            BigDecimal value = (BigDecimal) operand.getValue();
-            context.getDataStack().push(new Operand<>(value.negate(), BigDecimal.class));
-            System.out.println("Negated BigDecimal: " + value.negate());
+        if (value instanceof Integer) {
+            // Negate the integer value
+            int negatedValue = -((Integer) value);
+            context.getDataStack().push(new Operand<>(negatedValue, Integer.class));
+        } else if (value instanceof BigDecimal) {
+            // Negate the BigDecimal value
+            BigDecimal negatedValue = ((BigDecimal) value).negate();
+            context.getDataStack().push(new Operand<>(negatedValue, BigDecimal.class));
         } else {
-            // Replace unsupported types with an empty string
+            // Replace with an empty string if not a number
             context.getDataStack().push(new Operand<>("", String.class));
-            System.out.println("Replaced with empty string");
         }
-
-        System.out.println("Stack after negation: " + context.getDataStack());
     }
 }
