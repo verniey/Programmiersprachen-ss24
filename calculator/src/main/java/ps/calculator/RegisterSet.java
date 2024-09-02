@@ -22,6 +22,8 @@ public class RegisterSet {
         }
         // Initialize register 'a' with a welcome message and a number
         registers.put('a', new Operand<>("(Welcome to the calculator! Enter a command:)", String.class));
+        registers.put('m', new Operand<>("# ((5! + 4$ 3!@ ) (2$) # 5 = 1+$ @ ) 0 3! @ 3!3$ /\"", String.class));
+        registers.put('n', new Operand<>("# ((3! 6 +! + 3!3$ 1+ 3!3$ 4!@ ) (3$2$) 5! 8! = 1+$ @ ) 0 0 4! @ 3!3$ /", String.class));
     }
 
     public Operand<?> getRegisterValue(char register) {

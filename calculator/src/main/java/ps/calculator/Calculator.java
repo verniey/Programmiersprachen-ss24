@@ -58,6 +58,7 @@ public class Calculator {
         while (context.getCommandStream().hasNext()) {
             Command command = context.getCommandStream().getNextCommand();
             command.execute(context);
+            System.out.println(context.getDataStack());
         }
     }
 
